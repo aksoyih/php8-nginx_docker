@@ -12,11 +12,22 @@ services:
       - ../src/:/var/www/html/
       -  /logs/nginx:/var/log/nginx/
   php:
-    image: php:fpm-alpine
+    build:
+      context: .
+      dockerfile: php/DockerfilePHP
     networks:
       - internal
     volumes:
       - ../src/:/var/www/html
+  composer:
+    image: composer/composer:latest
+    command: composer install
+    networks:
+      - internal
+    volumes:
+      - ../src/:/var/www/html
+    depends_on:
+      - php
 networks:
   internal:
     driver: bridge
