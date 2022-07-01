@@ -28,6 +28,15 @@ services:
       - ../src/:/var/www/html
     depends_on:
       - php
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ../mongodb:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - internal
 networks:
   internal:
     driver: bridge
